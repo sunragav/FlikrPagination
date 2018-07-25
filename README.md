@@ -20,9 +20,9 @@ Architecture:
 
 Screenshots:
 
-![FirstScreen](https://github.com/sunragav/FlikrPagination/blob/master/device-2018-07-25-224804.png)
-![Search](https://github.com/sunragav/FlikrPagination/blob/master/device-2018-07-25-224833.png)
-![Results](https://github.com/sunragav/FlikrPagination/blob/master/device-2018-07-25-224847.png)
+![FirstScreen](https://github.com/sunragav/FlikrPagination/blob/master/FirstScreen.png)
+![Search](https://github.com/sunragav/FlikrPagination/blob/master/search.png)
+![Results](https://github.com/sunragav/FlikrPagination/blob/master/results.png)
 
 Contact: 
 sunragav@gmail.com
