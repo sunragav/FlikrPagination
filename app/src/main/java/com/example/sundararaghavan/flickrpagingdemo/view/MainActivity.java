@@ -27,6 +27,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements MainScreen {
     private static final String TAG = MainActivity.class.getSimpleName();
     private final static int DATA_FETCHING_INTERVAL = 5 * 1000; //5 seconds
+    private static final String SEARCH_KEY = "search-key";
     private RecyclerView recView;
     private FlikrListAdapter mAdapter;
     private SwipeRefreshLayout mSwipeRefreshLayout;
@@ -36,21 +37,29 @@ public class MainActivity extends AppCompatActivity implements MainScreen {
 
     private final Observer<String> errorObserver = errorMsg -> setError(errorMsg);
     private boolean isLoading;
-    private int page=0;
-    private String searchText="";
+    private int page = 0;
+    private String searchText = "";
+    private SearchView searchView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         bindViews();
+        // if you saved something on outState you can recover them here
+        if (savedInstanceState != null) {
+            if (savedInstanceState.getString(SEARCH_KEY) != null)
+                searchText = savedInstanceState.getString(SEARCH_KEY);
+        }
         mViewModel = ViewModelProviders.of(this).get(FlikrViewModel.class);
         mViewModel.getFlikerModels().observe(this, dataObserver);
         mViewModel.getErrorUpdates().observe(this, errorObserver);
         mViewModel.clearData();
-        mViewModel.fetchData(searchText,page++);
+        mViewModel.fetchData(searchText, page++);
     }
 
     private void bindViews() {
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         recView = findViewById(R.id.recView);
         mSwipeRefreshLayout = findViewById(R.id.swipeToRefresh);
@@ -72,21 +81,19 @@ public class MainActivity extends AppCompatActivity implements MainScreen {
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
 
-                if(dy > 0) //check for scroll down
+                if (dy > 0) //check for scroll down
                 {
                     GridLayoutManager layoutManager = (GridLayoutManager) recyclerView.getLayoutManager();
-                   int visibleItemCount = layoutManager.getChildCount();
-                   int totalItemCount = layoutManager.getItemCount();
-                   int pastVisiblesItems = layoutManager.findFirstVisibleItemPosition();
+                    int visibleItemCount = layoutManager.getChildCount();
+                    int totalItemCount = layoutManager.getItemCount();
+                    int pastVisiblesItems = layoutManager.findFirstVisibleItemPosition();
 
-                    if (!isLoading)
-                    {
-                        if ( (visibleItemCount + pastVisiblesItems) >= totalItemCount)
-                        {
+                    if (!isLoading) {
+                        if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
                             isLoading = true;
-                            Log.d(TAG,"fetchData called for page:"+page);
+                            Log.d(TAG, "fetchData called for page:" + page);
                             //Do pagination.. i.e. fetch new data
-                            mViewModel.fetchData(searchText,page++);
+                            mViewModel.fetchData(searchText, page++);
                         }
                     }
                 }
@@ -96,30 +103,39 @@ public class MainActivity extends AppCompatActivity implements MainScreen {
     }
 
     @Override
-    public boolean onCreateOptionsMenu( Menu menu) {
-        getMenuInflater().inflate( R.menu.main_menu, menu);
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (searchView != null) {
+            searchText = searchView.getQuery().toString();
+            outState.putString(SEARCH_KEY, searchText);
+        }
+    }
 
-        MenuItem myActionMenuItem = menu.findItem( R.id.action_search);
-        final SearchView searchView = (SearchView) myActionMenuItem.getActionView();
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+
+        MenuItem myActionMenuItem = menu.findItem(R.id.action_search);
+        searchView = (SearchView) myActionMenuItem.getActionView();
+        if (searchText != null && !searchText.isEmpty()) {
+            myActionMenuItem.expandActionView();
+            searchView.setQuery(searchText, true);
+            searchView.clearFocus();
+        }
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                page=1;
-                searchText=query;
+                page = 1;
+                searchText = query;
                 mAdapter.setItems(null);
                 mViewModel.clearData();
-                mViewModel.fetchData(query,page++);
+                mViewModel.fetchData(query, page++);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                if (TextUtils.isEmpty(newText)) {
-                   searchText="";
-                } else {
-                  searchText=newText;
-
-                }
+                searchText = newText;
                 return true;
             }
         });
@@ -138,7 +154,7 @@ public class MainActivity extends AppCompatActivity implements MainScreen {
         mLastFetchedDataTimeStamp = System.currentTimeMillis();
         mAdapter.setItems(data);
 
-        Log.d(TAG,"Thread->"+Thread.currentThread().getName()+"\nData Size:"+data.size()+"\nAdapter Data Size:"+mAdapter.getItemCount());
+        Log.d(TAG, "Thread->" + Thread.currentThread().getName() + "\nData Size:" + data.size() + "\nAdapter Data Size:" + mAdapter.getItemCount());
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
