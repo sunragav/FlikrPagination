@@ -1,12 +1,12 @@
 # FlikrPagination
-An Android app that searches images based on text using flickr api and displays them in a recyclerview. The project is designed using android architecture components.
 
+An Android app that searches images based on text using flickr api and displays them in a recyclerview. The project is designed using android architecture components.
+The project was developed using Android Studio 3.0.1
 The project is split into two gradle projects, one for UI and the other for data, to clearly separate the concerns.
 
 It uses RecyclerView.
 It uses Glide for image loading and caching.
 It uses Volley for the web service calls.
-
 
 It uses Android architecture components.
 Room, LiveData, ViewModel ( which can withstand configuration changes and activity lifecycles).
