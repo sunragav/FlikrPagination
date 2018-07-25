@@ -1,11 +1,6 @@
 # FlikrPagination
 Android that searches images based on text using flickr api and displays them in a recyclerview. The project is designed using android architecture components.
 
-Screenshots:
-
-![FirstScreen](https://github.com/sunragav/FlikrPagination/blob/master/device-2018-07-25-224804.png)
-![Search](https://github.com/sunragav/FlikrPagination/blob/master/device-2018-07-25-224833.png)
-![Results](https://github.com/sunragav/FlikrPagination/blob/master/device-2018-07-25-224847.png)
 
 It uses Glide for image loading and caching.
 It uses Volley for the web service calls.
@@ -19,6 +14,12 @@ Room:
 
 Architecture:
 ![Architecture](https://github.com/sunragav/FlikrPagination/blob/master/Architecture.JPG)
+
+Screenshots:
+
+![FirstScreen](https://github.com/sunragav/FlikrPagination/blob/master/device-2018-07-25-224804.png)
+![Search](https://github.com/sunragav/FlikrPagination/blob/master/device-2018-07-25-224833.png)
+![Results](https://github.com/sunragav/FlikrPagination/blob/master/device-2018-07-25-224847.png)
 
 Contact: 
 sunragav@gmail.com
