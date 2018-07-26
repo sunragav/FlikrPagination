@@ -4,11 +4,13 @@ An Android app that searches images based on text using flickr api and displays 
 The project has been developed using Android Studio 3.0.1.
 The project is split into two gradle projects, one for UI and the other for data, to clearly separate the concerns.
 
-It uses RecyclerView.
-It uses Glide for image loading and caching.
-It uses Volley for the web service calls.
+It uses:
+* Android architecture components Room, LiveData, ViewModel
+* RecyclerView.
+* Glide for image loading and caching.
+* Volley for the web service calls.
 
-It uses Android architecture components.
+
 Room, LiveData, ViewModel ( which can withstand configuration changes and activity lifecycles).
 It uses the Clean architecture by introducing an abstraction in each three mainlayers of the application namely Presentation, ViewModel(or Business logic) and the repository for the data layer. The Repository layer seemlessly supplies data either from the webservice layer or local persistence layer. 
 ## Architecture
