@@ -125,17 +125,16 @@ public class MainActivity extends AppCompatActivity implements MainScreen {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                page = 1;
-                searchText = query;
-                mAdapter.setItems(null);
-                mViewModel.clearData();
-                mViewModel.fetchData(query, page++);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                page = 1;
                 searchText = newText;
+                mAdapter.setItems(null);
+                mViewModel.clearData();
+                mViewModel.fetchData(newText, page++);
                 return true;
             }
         });

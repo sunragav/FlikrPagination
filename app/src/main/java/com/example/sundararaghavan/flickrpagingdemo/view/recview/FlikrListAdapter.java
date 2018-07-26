@@ -76,9 +76,11 @@ public class FlikrListAdapter extends RecyclerView.Adapter<FlikrListAdapter.Flik
     }
 
     public void setItems(List<FlikrModel> items) {
-        mItems.clear();
+       // mItems.clear();
         if (items != null) {
             mItems.addAll(items);
+        }else{
+            mItems.clear();
         }
         notifyDataSetChanged();
     }

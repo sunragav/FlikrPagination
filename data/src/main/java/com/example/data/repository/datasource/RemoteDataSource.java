@@ -60,10 +60,9 @@ public class RemoteDataSource implements DataSource<List<FlikrEntity>> {
                         response -> {
                             Log.d(TAG, "Thread->" +
                                     Thread.currentThread().getName() + "\tGot some network response");
-                            Log.d(TAG,"Thread->"+Thread.currentThread().getName()+"\n Response:"+response.toString());
+                            Log.d(TAG, "Thread->" + Thread.currentThread().getName() + "\n Response:" + response.toString());
                             final ArrayList<FlikrEntity> data = mObjMapper.mapJSONToEntity(response.toString());
-                            if (data != null && data.size() > 0)
-                                mDataApi.setValue(data);
+                            mDataApi.setValue(data);
                         },
                         error -> {
                             Log.d(TAG, "Thread->" +

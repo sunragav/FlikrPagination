@@ -12,6 +12,7 @@ import com.example.data.model.FlikrModel;
 import com.example.data.repository.datasource.LocalDataSource;
 import com.example.data.repository.datasource.RemoteDataSource;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -29,6 +30,7 @@ public class FlikrRepositoryImpl implements FlikrRepository {
     private final LocalDataSource mLocalDataSource;
     private MediatorLiveData<List<FlikrModel>> mDataMerger = new MediatorLiveData<>();
     private MediatorLiveData<String> mErrorMerger = new MediatorLiveData<>();
+    private final List<FlikrModel> dummy=new ArrayList<>();
 
     private FlikrRepositoryImpl(RemoteDataSource mRemoteDataSource, LocalDataSource mLocalDataSource, FlickrMapper mapper) {
         this.mRemoteDataSource = mRemoteDataSource;
@@ -41,6 +43,8 @@ public class FlikrRepositoryImpl implements FlikrRepository {
                         Log.d(TAG, "mDataMerger\tmRemoteDataSource onChange invoked");
 
                         mLocalDataSource.writeData(entities);
+                        if(entities==null || entities.size()==0)
+                            mDataMerger.postValue(dummy);
                         //List<FlikrModel> list = mMapper.mapEntityToModel(entities);
                         //mDataMerger.postValue(list);
 
