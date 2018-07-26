@@ -21,6 +21,13 @@ android {
         targetCompatibility 1.8
         sourceCompatibility 1.8
     }
+    task copyDebugApk(type: Copy) {
+        from 'build/outputs/apk/debug'
+        into '.' // Into the app folder
+        rename ('app-debug.apk',
+                'FlickrSearchPagination-debug.apk')
+        include '**/*.apk'
+    }
 }
 
 dependencies {
