@@ -14,6 +14,7 @@ It uses the Clean architecture by introducing an abstraction in each three mainl
 ## Architecture
 ![Architecture](https://github.com/sunragav/FlikrPagination/blob/master/Architecture.JPG)
 
+## Code walkthrough
 The search query is made using Volley with the search text and the page number as query params.
 ```java
 //RemoteDataSource.java
