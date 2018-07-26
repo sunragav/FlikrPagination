@@ -11,6 +11,9 @@ It uses Volley for the web service calls.
 It uses Android architecture components.
 Room, LiveData, ViewModel ( which can withstand configuration changes and activity lifecycles).
 It uses the Clean architecture by introducing an abstraction in each three mainlayers of the application namely Presentation, ViewModel(or Business logic) and the repository for the data layer. The Repository layer seemlessly supplies data either from the webservice layer or local persistence layer. 
+## Architecture
+![Architecture](https://github.com/sunragav/FlikrPagination/blob/master/Architecture.JPG)
+
 ```java
 //FlikrRepositoryImpl.java
 public class FlikrRepositoryImpl implements FlikrRepository {
@@ -72,6 +75,7 @@ The search query response data fetched from webservice (Flickr API) is persisted
     }
  ```
  ```java
+ //MainActivity.java
  @Override
     protected void onCreate(Bundle savedInstanceState) {
         mViewModel = ViewModelProviders.of(this).get(FlikrViewModel.class);
@@ -86,6 +90,7 @@ It fetches 15 images per fetch and loads the pages on demand as the user reaches
 This is handled in the recycler view's onScrolled listener. 
 
 ```java
+//MainAcitivity.java
 recView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -112,18 +117,15 @@ recView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
 Room is used as an ORM tool to interact between the java and the SQL Lite world.
 
-Room:
+## Room
 ![Room](https://github.com/sunragav/FlikrPagination/blob/master/Room.JPG)
 
-Architecture:
-![Architecture](https://github.com/sunragav/FlikrPagination/blob/master/Architecture.JPG)
 
-Screenshots:
-
+## Screenshots
 ![FirstScreen](https://github.com/sunragav/FlikrPagination/blob/master/FirstScreen.png)
 ![Search](https://github.com/sunragav/FlikrPagination/blob/master/search.png)
 ![Results](https://github.com/sunragav/FlikrPagination/blob/master/results.png)
 
-Contact: 
+## Contact
 sunragav@gmail.com
 +91 8655444565
