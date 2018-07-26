@@ -14,6 +14,31 @@ It uses the Clean architecture by introducing an abstraction in each three mainl
 ## Architecture
 ![Architecture](https://github.com/sunragav/FlikrPagination/blob/master/Architecture.JPG)
 
+The search query is made using Volley with the search text and the page number as query params.
+```java
+\\RemoteDataSource
+public void fetch(String searchText, int page) {
+        String searchURL = String.format(URL_SEARCH, API_KEY, PAGE_SIZE, page, searchText);
+        final JsonObjectRequest jsonObjReq =
+                new JsonObjectRequest(Request.Method.GET, searchURL, null,
+                        response -> {
+                            Log.d(TAG, "Thread->" +
+                                    Thread.currentThread().getName() + "\tGot some network response");
+                            Log.d(TAG,"Thread->"+Thread.currentThread().getName()+"\n Response:"+response.toString());
+                            final ArrayList<FlikrEntity> data = mObjMapper.mapJSONToEntity(response.toString());
+                            if (data != null && data.size() > 0)
+                                mDataApi.setValue(data);
+                        },
+                        error -> {
+                            Log.d(TAG, "Thread->" +
+                                    Thread.currentThread().getName() + "\tGot network error");
+                            mError.setValue(error.toString());
+                        });
+
+        mQueue.add(jsonObjReq);
+ }
+```
+The search query response data fetched from webservice (Flickr API) is persisted in the local storage(SQL Lite via Room) and served to recycler adapter of the app as needed.
 ```java
 //FlikrRepositoryImpl.java
 public class FlikrRepositoryImpl implements FlikrRepository {
@@ -31,12 +56,7 @@ public class FlikrRepositoryImpl implements FlikrRepository {
                     @Override
                     public void run() {
                         Log.d(TAG, "mDataMerger\tmRemoteDataSource onChange invoked");
-
                         mLocalDataSource.writeData(entities);
-                        //List<FlikrModel> list = mMapper.mapEntityToModel(entities);
-                        //mDataMerger.postValue(list);
-
-
                     }
                 })
         );
@@ -52,7 +72,7 @@ public class FlikrRepositoryImpl implements FlikrRepository {
 
         );
 ```
-The search query response data fetched from webservice (Flickr API) is persisted in the local storage(SQL Lite via Room) and served to recycler adapter of the app as needed. The data as and when written to the Room DB is updated to a LiveData observable , which is being observed by the view(MainActivity).
+The data as and when written to the Room DB is updated to a LiveData observable , which is being observed by the view(MainActivity).
 ```java
 //MainActivity.java
  private final Observer<List<FlikrModel>> dataObserver = flikrModels -> updateData(flikrModels);
