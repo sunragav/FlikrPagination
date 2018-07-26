@@ -38,7 +38,7 @@ public void fetch(String searchText, int page) {
         mQueue.add(jsonObjReq);
  }
 ```
-The search query response data fetched from webservice (Flickr API) is persisted in the local storage(SQL Lite via Room).
+The search query response data fetched from webservice (Flickr API) is persisted in the local storage(SQL Lite via Room) and posted to the observers via mDataMerger.post(list) call as shown in the code snippet below.
 ```java
 //FlikrRepositoryImpl.java
 public class FlikrRepositoryImpl implements FlikrRepository {
