@@ -96,7 +96,7 @@ The observable, LiveData, is being actively observed by the view(MainActivity)
         mViewModel.getFlikerModels().observe(this, dataObserver);
         mViewModel.getErrorUpdates().observe(this, errorObserver);
  ```
- and served to recycler adapter of the app as needed.
+ and served to the recyclerview adapter of the app as needed.
  ```java
  //MainActivity.java
   @Override
@@ -116,7 +116,7 @@ The observable, LiveData, is being actively observed by the view(MainActivity)
  ```
 The data is fetched page by page as long as there is a page that exists for the search. 
 It fetches 15 images per fetch and loads the pages on demand as the user reaches the end of the scroll in the recycler view. 
-This is handled in the recycler view's onScrolled listener. 
+This is handled in the recycler view's onScrollListener. 
 
 ```java
 //MainAcitivity.java
