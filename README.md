@@ -72,7 +72,7 @@ public class FlikrRepositoryImpl implements FlikrRepository {
 
         );
 ```
-The observable LiveData observable is being observed by the view(MainActivity)
+The observable, LiveData, is being actively observed by the view(MainActivity)
 
 ```java
 //MainActivity.java
