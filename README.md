@@ -9,6 +9,7 @@ It uses:
 * RecyclerView.
 * Glide for image loading and caching.
 * Volley for the web service calls.
+* Java version 1.8 compile options for using lamda expressions in the code
 
 
 Room, LiveData, ViewModel ( which can withstand configuration changes and activity lifecycles).
