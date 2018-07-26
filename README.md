@@ -138,7 +138,18 @@ recView.addOnScrollListener(new RecyclerView.OnScrollListener() {
                 }
             }
 ```
-
+Still during configuration changes like phone rotation, the search text the user entered will become empty in the searchView. To retain the search text during configuration changes, I have used the onSaveInstanceState to save it and restored it in the onCreate() of the MainActivity.
+```java
+//MainActivity.java
+@Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (searchView != null) {
+            searchText = searchView.getQuery().toString();
+            outState.putString(SEARCH_KEY, searchText);
+        }
+    }
+```
 Room is used as an ORM tool to interact between the java and the SQL Lite world.
 
 ## Room
