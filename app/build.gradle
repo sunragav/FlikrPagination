@@ -21,7 +21,7 @@ android {
         targetCompatibility 1.8
         sourceCompatibility 1.8
     }
-    task copyDebugApk(dependsOn: assemble) {
+    task copyDebugApk() {
         project.copy {
             from 'build/outputs/apk/debug'
             into '..' // Into the app folder
