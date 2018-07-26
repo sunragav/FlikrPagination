@@ -38,7 +38,7 @@ public void fetch(String searchText, int page) {
         mQueue.add(jsonObjReq);
  }
 ```
-The search query response data fetched from webservice (Flickr API) is persisted in the local storage(SQL Lite via Room) and served to recycler adapter of the app as needed.
+The search query response data fetched from webservice (Flickr API) is persisted in the local storage(SQL Lite via Room).
 ```java
 //FlikrRepositoryImpl.java
 public class FlikrRepositoryImpl implements FlikrRepository {
@@ -72,13 +72,26 @@ public class FlikrRepositoryImpl implements FlikrRepository {
 
         );
 ```
-The data as and when written to the Room DB is updated to a LiveData observable , which is being observed by the view(MainActivity).
+The data as and when written to the Room DB is updated to a LiveData observable , which is being observed by the view(MainActivity)
+
 ```java
 //MainActivity.java
  private final Observer<List<FlikrModel>> dataObserver = flikrModels -> updateData(flikrModels);
 
  private final Observer<String> errorObserver = errorMsg -> setError(errorMsg);
+ ```
  
+ ```java
+ //MainActivity.java
+ @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        mViewModel = ViewModelProviders.of(this).get(FlikrViewModel.class);
+        mViewModel.getFlikerModels().observe(this, dataObserver);
+        mViewModel.getErrorUpdates().observe(this, errorObserver);
+ ```
+ and served to recycler adapter of the app as needed.
+ ```java
+ //MainActivity.java
   @Override
     public void updateData(List<FlikrModel> data) {
         isLoading = false;
@@ -94,17 +107,6 @@ The data as and when written to the Room DB is updated to a LiveData observable 
         showErrorToast(msg);
     }
  ```
- ```java
- //MainActivity.java
- @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        mViewModel = ViewModelProviders.of(this).get(FlikrViewModel.class);
-        mViewModel.getFlikerModels().observe(this, dataObserver);
-        mViewModel.getErrorUpdates().observe(this, errorObserver);
- ```
-
-
-
 The data is fetched page by page as long as there is a page that exists for the search. 
 It fetches 15 images per fetch and loads the pages on demand as the user reaches the end of the scroll in the recycler view. 
 This is handled in the recycler view's onScrolled listener. 
