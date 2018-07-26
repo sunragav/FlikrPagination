@@ -16,7 +16,7 @@ It uses the Clean architecture by introducing an abstraction in each three mainl
 
 The search query is made using Volley with the search text and the page number as query params.
 ```java
-\\RemoteDataSource
+//RemoteDataSource.java
 public void fetch(String searchText, int page) {
         String searchURL = String.format(URL_SEARCH, API_KEY, PAGE_SIZE, page, searchText);
         final JsonObjectRequest jsonObjReq =
@@ -38,7 +38,7 @@ public void fetch(String searchText, int page) {
         mQueue.add(jsonObjReq);
  }
 ```
-The search query response data fetched from webservice (Flickr API) is persisted in the local storage(SQL Lite via Room) and posted to the observers via mDataMerger.post(list) call as shown in the code snippet below.
+The search query response data fetched from webservice (Flickr API) in the RemoteDataSource code snippet shown above, is persisted in the local storage(SQL Lite via Room) and posted to the observers via mDataMerger.post(list) call as shown in the code snippet below.
 ```java
 //FlikrRepositoryImpl.java
 public class FlikrRepositoryImpl implements FlikrRepository {
