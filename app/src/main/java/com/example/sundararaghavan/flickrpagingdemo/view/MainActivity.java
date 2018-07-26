@@ -154,7 +154,8 @@ public class MainActivity extends AppCompatActivity implements MainScreen {
         mLastFetchedDataTimeStamp = System.currentTimeMillis();
         mAdapter.setItems(data);
 
-        Log.d(TAG, "Thread->" + Thread.currentThread().getName() + "\nData Size:" + data.size() + "\nAdapter Data Size:" + mAdapter.getItemCount());
+        Log.d(TAG, "Thread->" + Thread.currentThread().getName() + "\nData Size:" +
+                data.size() + "\nAdapter Data Size:" + mAdapter.getItemCount());
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
