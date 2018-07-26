@@ -72,7 +72,7 @@ public class FlikrRepositoryImpl implements FlikrRepository {
 
         );
 ```
-The data as and when written to the Room DB is updated to a LiveData observable , which is being observed by the view(MainActivity)
+The observable LiveData observable is being observed by the view(MainActivity)
 
 ```java
 //MainActivity.java
