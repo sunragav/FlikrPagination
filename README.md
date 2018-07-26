@@ -39,6 +39,8 @@ public void fetch(String searchText, int page) {
  }
 ```
 The search query response data fetched from webservice (Flickr API) in the RemoteDataSource code snippet shown above, is persisted in the local storage(SQL Lite via Room) and posted to the observers via mDataMerger.post(list) call as shown in the code snippet below.
+"mDataMerger" is an observable LiveData object. So, as soon as it recieves an update it broadcasts the same to all the observers.
+In this case, MainActivity is our observer.
 ```java
 //FlikrRepositoryImpl.java
 public class FlikrRepositoryImpl implements FlikrRepository {
