@@ -12,7 +12,8 @@ It uses:
 
 
 Room, LiveData, ViewModel ( which can withstand configuration changes and activity lifecycles).
-It uses the Clean architecture by introducing an abstraction in each three mainlayers of the application namely Presentation, ViewModel(or Business logic) and the repository for the data layer. The Repository layer seemlessly supplies data either from the webservice layer or local persistence layer. 
+It uses the MVVM architecture by introducing an abstraction in each three mainlayers of the application namely Presentation, ViewModel(or Business logic) and the repository for the data layer. The Repository layer seemlessly supplies data either from the webservice layer or local persistence layer.
+
 ## Architecture
 ![Architecture](https://github.com/sunragav/FlikrPagination/blob/master/Architecture.JPG)
 
